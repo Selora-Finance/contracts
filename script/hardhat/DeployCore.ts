@@ -13,11 +13,11 @@ import {
   Pool,
   Minter,
   RewardsDistributor,
-  CEDA,
+  SELO,
   Voter,
   VeArtProxy,
   VotingEscrow,
-  CEDAForwarder,
+  SELOForwarder,
   RouterWithFee,
 } from "../../artifacts/types";
 import Values from "../constants/values.json";
@@ -32,7 +32,7 @@ interface CoreOutput {
   minter: string;
   poolFactory: string;
   router: string;
-  ceda: string;
+  SELO: string;
   voter: string;
   votingEscrow: string;
   votingRewardsFactory: string;
@@ -45,9 +45,9 @@ async function main() {
   const CONSTANTS = Values[networkId as unknown as keyof typeof Values];
   const whitelistTokens = CONSTANTS.whitelistTokens;
 
-  const ceda = await deploy<CEDA>("CEDA");
-  await ceda.mint(CONSTANTS.team, MINT_VALUE);
-  whitelistTokens.push(ceda.address);
+  const SELO = await deploy<SELO>("SELO");
+  await SELO.mint(CONSTANTS.team, MINT_VALUE);
+  whitelistTokens.push(SELO.address);
   // ====== end _deploySetupBefore() ======
 
   // ====== start _coreSetup() ======
@@ -75,7 +75,7 @@ async function main() {
   );
   // ====== end deployFactories() ======
 
-  const forwarder = await deploy<CEDAForwarder>("CEDAForwarder");
+  const forwarder = await deploy<SELOForwarder>("SELOForwarder");
 
   const balanceLogicLibrary = await deployLibrary("BalanceLogicLibrary");
   const delegationLogicLibrary = await deployLibrary("DelegationLogicLibrary");
@@ -88,7 +88,7 @@ async function main() {
     "VotingEscrow",
     libraries,
     forwarder.address,
-    ceda.address,
+    SELO.address,
     factoryRegistry.address
   );
 
@@ -123,7 +123,7 @@ async function main() {
 
   const minter = await deploy<Minter>("Minter", undefined, voter.address, escrow.address, distributor.address);
   await distributor.setMinter(minter.address);
-  await ceda.setMinter(minter.address);
+  await SELO.setMinter(minter.address);
 
   await voter.initialize(whitelistTokens, minter.address);
   // ====== end _coreSetup() ======
@@ -141,6 +141,16 @@ async function main() {
   await poolFactory.setVoter(voter.address);
   // ====== end _deploySetupAfter() ======
 
+  const router = await deploy<RouterWithFee>(
+    "RouterWithFee",
+    undefined,
+    factoryRegistry.address,
+    poolFactory.address,
+    voter.address,
+    CONSTANTS.WETH,
+    CONSTANTS.team
+  );
+
   const outputDirectory = "script/constants/output";
   const outputFile = join(process.cwd(), outputDirectory, `CoreOutput-${String(networkId)}.json`);
 
@@ -153,8 +163,8 @@ async function main() {
     managedRewardsFactory: managedRewardsFactory.address,
     minter: minter.address,
     poolFactory: poolFactory.address,
-    router: "",
-    ceda: ceda.address,
+    router: router.address,
+    SELO: SELO.address,
     voter: voter.address,
     votingEscrow: escrow.address,
     votingRewardsFactory: votingRewardsFactory.address,

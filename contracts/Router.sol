@@ -38,12 +38,7 @@ contract Router is IRouter {
         if (deadline < block.timestamp) revert Expired();
     }
 
-    constructor(
-        address _factoryRegistry,
-        address _factory,
-        address _voter,
-        address _weth
-    ) {
+    constructor(address _factoryRegistry, address _factory, address _voter, address _weth) {
         factoryRegistry = _factoryRegistry;
         defaultFactory = _factory;
         voter = _voter;
