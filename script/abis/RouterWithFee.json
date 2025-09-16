@@ -3,11 +3,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_forwarder",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_factoryRegistry",
         "type": "address"
       },
@@ -146,62 +141,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "amounts",
-        "type": "uint256[]"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "from",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "to",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "stable",
-            "type": "bool"
-          },
-          {
-            "internalType": "address",
-            "name": "factory",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct IRouter.Route[]",
-        "name": "routes",
-        "type": "tuple[]"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "deadline",
-        "type": "uint256"
-      }
-    ],
-    "name": "UNSAFE_swapExactTokensForTokens",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -654,62 +593,6 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "tokens0",
-        "type": "address[]"
-      },
-      {
-        "internalType": "address[]",
-        "name": "tokens1",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "amountsIn",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "address",
-        "name": "_factory",
-        "type": "address"
-      }
-    ],
-    "name": "getBestSwapRoutes",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "from",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "to",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "stable",
-            "type": "bool"
-          },
-          {
-            "internalType": "address",
-            "name": "factory",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct IRouter.Route[]",
-        "name": "routes",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "tokenA",
         "type": "address"
@@ -772,25 +655,6 @@
     "name": "hook",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "forwarder",
-        "type": "address"
-      }
-    ],
-    "name": "isTrustedForwarder",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
